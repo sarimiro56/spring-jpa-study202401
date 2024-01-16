@@ -52,7 +52,8 @@ class StudentPageRepositoryTest {
         Pageable pageInfo = PageRequest.of(
                 pageNo - 1,
                 amount,
-//                Sort.by("name").descending() // 엔터티 필드명을 써야함
+                // Sort.by("name").descending()  // 엔터티 필드명을 써야함
+
                 Sort.by(
                         Sort.Order.desc("name"),
                         Sort.Order.asc("city")
@@ -96,5 +97,6 @@ class StudentPageRepositoryTest {
         students.getContent().forEach(System.out::println);
         System.out.println("\n\n\n");
     }
+
 
 }

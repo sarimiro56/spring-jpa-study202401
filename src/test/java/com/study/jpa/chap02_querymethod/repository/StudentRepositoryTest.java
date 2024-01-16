@@ -15,10 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(false)
+@Rollback
 class StudentRepositoryTest {
+
     @Autowired
     StudentRepository studentRepository;
+
 
     @BeforeEach
     void insertData() {
@@ -27,11 +29,13 @@ class StudentRepositoryTest {
                 .city("청양군")
                 .major("경제학")
                 .build();
+
         Student s2 = Student.builder()
                 .name("춘식이")
                 .city("서울시")
                 .major("컴퓨터공학")
                 .build();
+
         Student s3 = Student.builder()
                 .name("어피치")
                 .city("제주도")
@@ -42,6 +46,7 @@ class StudentRepositoryTest {
         studentRepository.save(s2);
         studentRepository.save(s3);
     }
+
 
     @Test
     @DisplayName("테스트로 하나 삽입한다")
@@ -57,6 +62,8 @@ class StudentRepositoryTest {
         //then
     }
 
+
+
     @Test
     @DisplayName("이름이 춘식이인 학생의 정보를 단일조회한다.")
     void findByNameTest() {
@@ -68,10 +75,14 @@ class StudentRepositoryTest {
         assertEquals(1, studentList.size());
 
         System.out.println("studentList.get(0) = " + studentList.get(0));
+
+
     }
 
+
+
     @Test
-    @DisplayName("전공에 공학이 포함된 학생 정보를 조회한다.")
+    @DisplayName("전공에 공학이 포함된 학생정보를 조회한다.")
     void findByContainingTest() {
         //given
         String majorKeyword = "공학";
@@ -81,7 +92,11 @@ class StudentRepositoryTest {
         assertEquals(2, studentList.size());
 
         System.out.println("\n\n\n\n");
+        studentList.forEach(System.out::println);
+        System.out.println("\n\n\n\n");
     }
+
+
 
     @Test
     @DisplayName("네이티브 SQL로 이름으로 조회하기")
@@ -95,8 +110,10 @@ class StudentRepositoryTest {
         assertEquals("청양군", student.getCity());
     }
 
+
+
     @Test
-    @DisplayName("JPQL메서드를 사용한 도시 이름으로 학생조회")
+    @DisplayName("JPQL메서드를 사용한 도시이름으로 학생조회")
     void findByCityWithJPQL() {
         //given
         String city = "청양군";
@@ -105,6 +122,8 @@ class StudentRepositoryTest {
         //then
         assertEquals("쿠로미", student.getName());
     }
+
+
 
     @Test
     @DisplayName("JPQL을 이용한 이름으로 검색하기")
@@ -115,8 +134,12 @@ class StudentRepositoryTest {
         List<Student> students = studentRepository.searchByNameWithJPQL(name);
         //then
         assertEquals(1, students.size());
+
         System.out.println("students.get(0) = " + students.get(0));
+
     }
+
+
 
     @Test
     @DisplayName("JPQL로 삭제하기")
@@ -126,6 +149,7 @@ class StudentRepositoryTest {
         String city = "제주도";
         //when
         studentRepository.deleteByNameWithJPQL(name, city);
+
         //then
         List<Student> studentList = studentRepository.findByName(name);
         assertEquals(0, studentList.size());
