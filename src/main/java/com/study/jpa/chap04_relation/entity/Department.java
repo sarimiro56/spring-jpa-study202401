@@ -44,4 +44,25 @@ public class Department {
     @OneToMany(mappedBy = "department")
     private List<Employee> employees = new ArrayList<>();
 
+
+    @Test
+    @DisplayName("양방향 연관관계에서 연관 데이터 수정")
+    void changeDeptTest() {
+        //given
+        // 3번 사원의 부서를 2번 부서에서 1번으로 수정해야 함
+
+        Employee employee = employeeRepository.findByid();
+        //when
+
+        // tbl_emp에서 dept_id를 변경하는 것이 논리적으로 맞다
+        employee.setDepartment(department);
+
+
+        //then
+
+        // 부서를 변경한 상태에서 Department쪽에 1번 부서를 채용한다면?
+        List<Employee> employees = department.getEmployees();
+        System.out.println("\n\n\n");
+    }
+
 }
