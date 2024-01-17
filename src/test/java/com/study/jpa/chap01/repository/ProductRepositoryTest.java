@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback  // 테스트 진행 후 롤백
+@Rollback(value = false)  // 테스트 진행 후 롤백
 class ProductRepositoryTest {
 
     @Autowired
